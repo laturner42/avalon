@@ -23,7 +23,10 @@ export default class MissionChooserScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={{ color: 'white', fontSize: 30 }}>{this.props.players[this.props.missionLeader]}, you are the Mission Leader!</Text>
+        <Text style={{ color: 'white', fontSize: 30 }}>
+          <Text style={{ color: '#6bf' }}>{this.props.players[this.props.missionLeader]}</Text>,
+          you are the Mission Leader!
+        </Text>
         <Text style={{ color: '#aaa', fontSize: 24, margin: 5 }}>Choose {this.props.missionSize}</Text>
         {
           this.props.players.map((player) => (
@@ -49,7 +52,7 @@ export default class MissionChooserScreen extends React.Component {
             onPress={() => this.props.getMissionApproval(this.state.playersChosen)}
             style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20, width: '100%'}}
           >
-            <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Propose Mission Group</Text>
+            <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Propose Mission Party</Text>
           </TouchableOpacity>
         }
       </View>

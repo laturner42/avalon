@@ -24,7 +24,7 @@ export default class MissionChooserScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={{ color: 'white', fontSize: 28, textAlign: 'center' }}>Was the following mission approved by a majority of the group?</Text>
-        <Text style={{ color: 'white', fontSize: 24, textAlign: 'center', marginTop: 10 }}>{this.props.party.join(', ')}</Text>
+        <Text style={{ color: '#6bf', fontSize: 24, textAlign: 'center', marginTop: 10 }}>{this.props.party.join(', ')}</Text>
         <TouchableOpacity
           onPress={this.props.approveMission}
           style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20, width: '100%'}}

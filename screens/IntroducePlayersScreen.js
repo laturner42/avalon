@@ -33,22 +33,36 @@ export default class IntroducePlayersScreen extends React.Component {
   }
 
   getRoleText = (role) => {
-    const badGuysString = this.props.getBadGuys().filter(name => name !== this.state.remainingPlayers[0]).join(', ');
+    const badGuysString = <Text style={{ color: '#f76' }}>{this.props.getBadGuys().filter(name => name !== this.state.remainingPlayers[0]).join(', ')}</Text>
+    const theMs = <Text style={{ color: '#6bf' }}>
+      {Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Merlin' || this.props.roles[n] === 'Maldova').join(', ')}
+    </Text>;
+    let string;
+    let badGuysShow = false;
+    let percy = false;
     switch(role) {
       case 'Merlin':
-        return 'Don\'t die. The Bad Guys are: ' + badGuysString;
+        string = 'Don\'t die. The Bad Guys are: ';
+        badGuysShow = true;
+        break;
       case 'Good Guy':
-        return 'Protect Merlin.';
-      case 'Bad Guy':
-        return 'Make sure Merlin dies. The other Bad Guys are: ' + badGuysString;
-      case 'Percy':
-        const theMs = Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Merlin' || this.props.roles[n] === 'Maldova')
-        return 'These two are Merlin and Maldova, but you are unsure which is which: ' + theMs.join(', ');
+        string = 'Protect Merlin.';
+        break;
       case 'Maldova':
-        return 'Make sure Merlin dies. The other Bad Guys are: ' + badGuysString;
+      case 'Bad Guy':
+        string = 'Make sure Merlin dies. The other Bad Guys are: ';
+        badGuysShow = true;
+        break;
+      case 'Percy':
+        string = 'These two are Merlin and Maldova, but you are unsure which is which: ';
+        percy = true;
+        break;
       case 'Assassin':
-        return 'Kill Merlin. The other Bad Guys are: ' + badGuysString;
-    }
+        string = 'Kill Merlin. The other Bad Guys are: ';
+        badGuysShow = true;
+        break;
+      }
+    return <Text style={{ color: 'white', fontSize: 24, textAlign: 'center', }}>{string} {badGuysShow && badGuysString}{percy && theMs}</Text>;
   }
 
   render() {
@@ -59,7 +73,7 @@ export default class IntroducePlayersScreen extends React.Component {
         <Text style={{ color: 'white', fontSize: 32 }}>{player}</Text>
         <Text style={{ color: '#bbb', fontSize: 24 }}>your role is</Text>
         <Text style={{ color: 'white', fontSize: 32 }}>{this.props.roles[player]}</Text>
-        <Text style={{ color: 'white', fontSize: 24, textAlign: 'center', }}>{this.getRoleText(this.props.roles[player])}</Text>
+        {this.getRoleText(this.props.roles[player])}
         <TouchableOpacity
           onPress={this.nextPlayer}
           style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20}}

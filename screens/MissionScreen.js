@@ -38,7 +38,7 @@ export default class IntroducePlayersScreen extends React.Component {
         passed: fail === 0,
         display: false,
       });
-      setTimeout(this.nextResult, 4000);
+      setTimeout(this.nextResult, 3300);
     }
   }
 
@@ -53,13 +53,13 @@ export default class IntroducePlayersScreen extends React.Component {
           pass, fail,
           display: false,
         })
-        setTimeout(this.nextResult, 2500);
+        setTimeout(this.nextResult, 2000);
       }
     } else {
       this.setState({
         display: true,
       })
-      setTimeout(this.nextResult, 1500);
+      setTimeout(this.nextResult, 1100);
     }
   }
 

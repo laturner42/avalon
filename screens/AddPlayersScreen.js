@@ -9,11 +9,11 @@ export default class AddPlayersScreen extends React.Component {
     return (
       <View style={styles.container}>
         <View style={{width: '100%'}}>
-          <Text style={{ color: '#acf', fontSize: 40, margin: 20, textAlign: 'center' }}>avalon</Text>
+          <Text style={{ color: '#6bf', fontSize: 40, marginBottom: 25, textAlign: 'center' }}>avalon</Text>
         </View>
         <Text style={{ color: 'white', fontSize: 24 }}>Add new player:</Text>
         <TextInput
-          style={{height: 40, width: '100%', borderColor: '#fff', borderWidth: 1, borderTopWidth: 0, marginTop: 10, marginBottom: 10, padding: 5, color: 'white'}}
+          style={{ fontSize: 20, height: 40, width: '100%', borderColor: '#fff', borderWidth: 1, borderTopWidth: 0, marginTop: 10, marginBottom: 10, padding: 5, color: 'white'}}
           onChangeText={(newName) => this.setState({newName})}
           value={this.state.newName}
           onSubmitEditing={() => {
@@ -35,7 +35,7 @@ export default class AddPlayersScreen extends React.Component {
         >
           <Text style={{ color: '#fff', fontSize: 24 }}>Reset</Text>
         </TouchableOpacity>
-        <Text style={{ color: 'white', fontSize: 24 }}>Current player list:</Text>
+        { this.props.players.length > 0 && <Text style={{ color: 'white', fontSize: 24 }}>Current player list:</Text> }
         {
           this.props.players.map((player) => <Text style={{ color: '#bbb', fontSize: 22 }} key={player}>{player}</Text>)
         }

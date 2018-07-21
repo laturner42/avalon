@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, Alert } from 'react-native';
 import _ from 'lodash';
 
 import AddPlayersScreen from './screens/AddPlayersScreen';
@@ -13,7 +13,7 @@ import FinishScreen from './screens/FinishScreen';
 export default class App extends React.Component {
 
   state = {
-    players: ['Preston', 'Victoria', 'Nathan', 'Josh', 'Radner'],
+    players: [],
     roles: {},
     STATE_VIEW: 'ADD_PLAYERS',
     missionNumber: 0,
@@ -40,12 +40,12 @@ export default class App extends React.Component {
   }
 
   missionSizeChart = {
-    5: [2, 3, 2, 3, 3],
-    6: [2, 3, 4, 3, 4],
-    7: [2, 3, 3, 4, 4],
-    8: [3, 4, 4, 5, 5],
-    9: [3, 4, 4, 5, 5],
-    10: [3, 4, 4, 5, 5]
+    5:  [2, 3, 2, 3, 3],
+    6:  [2, 3, 4, 3, 4],
+    7:  [2, 3, 3, 4, 4],
+    8:  [3, 4, 4, 5, 5],
+    9:  [3, 4, 4, 5, 5],
+    10: [3, 4, 4, 5, 5],
   }
   
   reset = () => {
@@ -62,6 +62,14 @@ export default class App extends React.Component {
 
   addPlayer = (player) => {
     if (player.length < 2) return;
+    if (this.state.players.includes(player)) {
+      Alert.alert('This player is already playing.');
+      return;
+    }
+    if (this.state.players.length === 10) {
+      Alert.alert('The max number of players is 10.');
+      return;
+    }
     const players = this.state.players;
     players.push(player);
     this.setState({ players });
