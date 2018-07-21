@@ -6,10 +6,11 @@ export default class AddPlayersScreen extends React.Component {
   state = { newName: '' }
 
   render() {
+    const beginColor = this.props.players.length >= 5 ? '#4f5' : '#666';
     return (
       <View style={styles.container}>
         <View style={{width: '100%'}}>
-          <Text style={{ color: '#6bf', fontSize: 40, marginBottom: 25, textAlign: 'center' }}>avalon</Text>
+          <Text style={{ color: '#5af', fontSize: 50, marginBottom: 25, textAlign: 'center' }}>avalon</Text>
         </View>
         <Text style={{ color: 'white', fontSize: 24 }}>Add new player:</Text>
         <TextInput
@@ -37,9 +38,9 @@ export default class AddPlayersScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             onPress={this.props.begin}
-            style={{borderColor: '#4f5', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
+            style={{borderColor: beginColor, borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
           >
-            <Text style={{ color: this.props.players.length >= 5 ? '#4f5' : '#666', fontSize: 24 }}>Begin</Text>
+            <Text style={{ color: beginColor, fontSize: 24 }}>Begin</Text>
           </TouchableOpacity>
         </View>
         { this.props.players.length > 0 && <Text style={{ color: 'white', fontSize: 24 }}>Current player list:</Text> }
