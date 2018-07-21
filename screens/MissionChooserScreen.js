@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TextInput, Button, TouchableOpacity } from 'react-native';
 
 export default class MissionChooserScreen extends React.Component {
 
@@ -28,25 +28,27 @@ export default class MissionChooserScreen extends React.Component {
           you are the Mission Leader!
         </Text>
         <Text style={{ color: '#aaa', fontSize: 24, margin: 5 }}>Choose {this.props.missionSize}</Text>
-        {
-          this.props.players.map((player) => (
-            <View style={{
-              width: '100%',
-              flexWrap: 'wrap', 
-              alignItems: 'flex-start',
-              flexDirection: 'row',
-              margin: 10,
-            }} key={player}>
-              <TouchableOpacity
-                onPress={() => this.selectPlayer(player)}
-                style={{borderColor: '#fff', borderWidth: 1, width: 30, height: 30, marginRight: 10,
-                  backgroundColor: this.state.playersChosen.includes(player) ? '#2a5': 'black',
-                }}
-              />
-              <Text style={{ color: 'white', fontSize: 24 }}>{player} {this.state.playersChosen.includes(player)}</Text>
-            </View>
-          ))
-        }
+        <ScrollView style={{ maxHeight: '50%' }}>
+          {
+            this.props.players.map((player) => (
+              <View style={{
+                width: '100%',
+                flexWrap: 'wrap', 
+                alignItems: 'flex-start',
+                flexDirection: 'row',
+                margin: 10,
+              }} key={player}>
+                <TouchableOpacity
+                  onPress={() => this.selectPlayer(player)}
+                  style={{borderColor: '#fff', borderWidth: 1, width: 30, height: 30, marginRight: 10,
+                    backgroundColor: this.state.playersChosen.includes(player) ? '#2a5': 'black',
+                  }}
+                />
+                <Text style={{ color: 'white', fontSize: 24, width: '70%' }} numberOfLines={1}>{player}</Text>
+              </View>
+            ))
+          }
+        </ScrollView>
         {this.state.playersChosen.length === this.props.missionSize &&
           <TouchableOpacity
             onPress={() => this.props.getMissionApproval(this.state.playersChosen)}

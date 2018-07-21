@@ -23,21 +23,28 @@ export default class AddPlayersScreen extends React.Component {
           autoCorrect={false}
           returnKeyType="done"
         />
-        <TouchableOpacity
-          onPress={this.props.begin}
-          style={{borderColor: '#4f5', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
-        >
-          <Text style={{ color: this.props.players.length >= 5 ? '#4f5' : '#666', fontSize: 24 }}>Begin</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          onPress={this.props.reset}
-          style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
-        >
-          <Text style={{ color: '#fff', fontSize: 24 }}>Reset</Text>
-        </TouchableOpacity>
+        <View style={{
+          width: '100%',
+          flexWrap: 'wrap', 
+          alignItems: 'flex-start',
+          flexDirection: 'row',
+        }}>
+          <TouchableOpacity
+            onPress={this.props.reset}
+            style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
+          >
+            <Text style={{ color: '#fff', fontSize: 24 }}>Reset</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={this.props.begin}
+            style={{borderColor: '#4f5', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
+          >
+            <Text style={{ color: this.props.players.length >= 5 ? '#4f5' : '#666', fontSize: 24 }}>Begin</Text>
+          </TouchableOpacity>
+        </View>
         { this.props.players.length > 0 && <Text style={{ color: 'white', fontSize: 24 }}>Current player list:</Text> }
         {
-          this.props.players.map((player) => <Text style={{ color: '#bbb', fontSize: 22 }} key={player}>{player}</Text>)
+          this.props.players.map((player, i) => <Text style={{ color: '#bbb', fontSize: 22 }} key={player}>{i+1}. {player}</Text>)
         }
       </View>
     );
