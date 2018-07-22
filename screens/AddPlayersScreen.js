@@ -14,7 +14,7 @@ export default class AddPlayersScreen extends React.Component {
         </View>
         <Text style={{ color: 'white', fontSize: 24 }}>Add new player:</Text>
         <TextInput
-          style={{ fontSize: 20, height: 40, width: '100%', borderColor: '#fff', borderWidth: 1, borderTopWidth: 0, marginTop: 10, marginBottom: 10, padding: 5, color: 'white'}}
+          style={{ fontSize: 21, height: 40, width: '100%', borderColor: '#fff', borderWidth: 1, borderTopWidth: 0, marginTop: 10, marginBottom: 10, padding: 5, color: 'white'}}
           onChangeText={(newName) => this.setState({newName})}
           value={this.state.newName}
           onSubmitEditing={() => {

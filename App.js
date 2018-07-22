@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Alert } from 'react-native';
 import _ from 'lodash';
 
 import AddPlayersScreen from './screens/AddPlayersScreen';
+import RulesScreen from './screens/RulesScreen';
 import IntroducePlayersScreen from './screens/IntroducePlayersScreen';
 import MissionChooserScreen from './screens/MissionChooserScreen';
 import MissionApprovalScreen from './screens/MissionApprovalScreen';
@@ -48,9 +49,9 @@ export default class App extends React.Component {
     10: [3, 4, 4, 5, 5],
   }
   
-  reset = () => {
+  reset = (keepPlayers) => {
     this.setState({
-      players: [],
+      players: keepPlayers ? this.state.players : [],
       missionNumber: 0,
       missionLeader: 0,
       passedMissions: 0,
@@ -142,6 +143,12 @@ export default class App extends React.Component {
     }
   }
 
+  iUnderstand = () => {
+    this.setState({
+      STATE_VIEW: 'INTRODUCTIONS',
+    })
+  }
+
   begin = () => {
     if (this.state.players.length < 5) return;
     
@@ -166,7 +173,7 @@ export default class App extends React.Component {
       roles[player] = remainingRoles.pop();
     }
     this.setState({
-      roles, STATE_VIEW: 'INTRODUCTIONS', players: shuffledPlayers,
+      roles, STATE_VIEW: 'SHOW_RULES', players: shuffledPlayers,
     });
   }
 
@@ -181,6 +188,8 @@ export default class App extends React.Component {
     switch(this.state.STATE_VIEW) {
       case 'ADD_PLAYERS':
         return <AddPlayersScreen addPlayer={this.addPlayer} reset={this.reset} players={this.state.players} begin={this.begin} />
+      case 'SHOW_RULES':
+        return <RulesScreen getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} missionChart={this.missionSizeChart[this.state.players.length]} iUnderstand={this.iUnderstand} />
       case 'INTRODUCTIONS':
         return <IntroducePlayersScreen roles={this.state.roles} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} finishIntroductions={this.finishIntroductions} />
       case 'CHOOSE_MISSION':

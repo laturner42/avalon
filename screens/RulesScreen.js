@@ -12,30 +12,28 @@ export default class AssassinScreen extends React.Component {
       this.setState({
         showReset: true,
       })
-    }, 5000);
+    }, 4000);
   }
 
   render() {
+    const numGoodGuys = this.props.getGoodGuys().length;
+    const numBadGuys = this.props.getBadGuys().length;
     return (
       <View style={styles.container}>
+        <Text style={{ color: '#fff', fontSize: 32, textAlign: 'center' }}>Game specifics:</Text>
+        <Text style={{ color: '#4f5', fontSize: 24, textAlign: 'center' }}>{numGoodGuys} Good Guys</Text>
+        <Text style={{ color: '#f54', fontSize: 24, textAlign: 'center' }}>{numBadGuys} Bad Guys</Text>
+        <Text style={{ color: '#fff', fontSize: 26, textAlign: 'center' }}>Mission breakdown:</Text>
         {
-          this.props.goodGuysWin ?
-          <Text style={{ color: '#4f5', fontSize: 32, textAlign: 'center' }}>The Good Guys Win!</Text> :
-          <Text style={{ color: '#f54', fontSize: 32, textAlign: 'center' }}>The Bad Guys Win!</Text>
-        }
-        <Text style={{ color: '#fff', fontSize: 24, textAlign: 'center', marginTop: 20, marginBottom: 10 }}>Everyone's roles:</Text>
-        {
-          this.props.players.map(player => (
-            <Text style={{ color: '#eee', fontSize: 24, textAlign: 'center' }} key={player}>{player}: {this.props.roles[player]}</Text>
-          ))
+          [0,1,2,3,4].map(i => <Text style={{ color: '#ddd', fontSize: 24 }} key={i}>{i+1}: {this.props.missionChart[i]} people</Text>)
         }
         {
           this.state.showReset &&
           <TouchableOpacity
-            onPress={() => this.props.reset(true)}
+            onPress={this.props.iUnderstand}
             style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
           >
-            <Text style={{ color: '#fff', fontSize: 24 }}>Play Again</Text>
+            <Text style={{ color: '#fff', fontSize: 24 }}>We're ready.</Text>
           </TouchableOpacity>
         }
       </View>

@@ -34,8 +34,9 @@ export default class IntroducePlayersScreen extends React.Component {
     });
 
     if (remainingPlayers.length < 1) {
+      const needToFail = 1; //this.props.party.length >= 7 ? 2 : 1;
       this.setState({
-        passed: fail === 0,
+        passed: fail < needToFail,
         display: false,
       });
       setTimeout(this.nextResult, 3300);
