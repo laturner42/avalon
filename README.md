@@ -40,13 +40,13 @@ In addition to the basic roles of "Good Guy" and "Bad Guy", there are four addit
 
 **Bad Guys**
 
-Assassin - If the Good Guys win, the Assassin gets one chance to kill Merlin. Choose wisely. Think of who knew a *little* too much.
-Maldova - A Bad Guy with a name, who looks an awful lot like Merlin. Percy knows you're either Merlin or Maldova; use this to throw them off.
+- Assassin - If the Good Guys win, the Assassin gets one chance to kill Merlin. Choose wisely. Think of who knew a *little* too much.
+- Maldova - A Bad Guy with a name, who looks an awful lot like Merlin. Percy knows you're either Merlin or Maldova; use this to throw them off.
 
 **Good Guys**
 
-Merlin - Merlin must live. He is the only Good Guy who knows who the Bad Guys are. Use this knowledge wisely, but don't give away who you are.
-Percy - Percy knows who Merlin and Maldova are, but has no idea which is which. Try to figure it out quickly and influence group decisions.
+- Merlin - Merlin must live. He is the only Good Guy who knows who the Bad Guys are. Use this knowledge wisely, but don't give away who you are.
+- Percy - Percy knows who Merlin and Maldova are, but has no idea which is which. Try to figure it out quickly and influence group decisions.
 
 ### winning and losing
 
