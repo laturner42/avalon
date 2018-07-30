@@ -22,6 +22,7 @@ export default class App extends React.Component {
     missionSize: 3,
     passedMissions: 0,
     failedMissions: 0,
+    consecutiveFailures: 0,
   }
 
   goodRoles = ['Merlin', 'Percy', 'Good Guy'];
@@ -56,6 +57,7 @@ export default class App extends React.Component {
       missionLeader: 0,
       passedMissions: 0,
       failedMissions: 0,
+      consecutiveFailures: 0,
       STATE_VIEW: 'ADD_PLAYERS',
       roles: {},
     })
@@ -93,7 +95,8 @@ export default class App extends React.Component {
 
   approveMission = () => {
     this.setState({
-      STATE_VIEW: 'GO_ON_MISSION'
+      STATE_VIEW: 'GO_ON_MISSION',
+      consecutiveFailures: 0,
     })
   }
   
@@ -106,10 +109,16 @@ export default class App extends React.Component {
   }
 
   denyMission = () => {
-    this.setState({
-      STATE_VIEW: 'CHOOSE_MISSION',
-      missionLeader: this.nextMissionLeader(),
-    });
+    const consecutiveFailures = this.state.consecutiveFailures + 1;
+    if (consecutiveFailures >= 5) {
+      this.finishGame(false);
+    } else {
+      this.setState({
+        STATE_VIEW: 'CHOOSE_MISSION',
+        missionLeader: this.nextMissionLeader(),
+        consecutiveFailures,
+      });
+    }
   }
 
 
@@ -197,7 +206,7 @@ export default class App extends React.Component {
       case 'APPROVAL':
         return <MissionApprovalScreen party={this.state.party} denyMission={this.denyMission} approveMission={this.approveMission}/>
       case 'GO_ON_MISSION':
-        return <MissionScreen party={this.state.party} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} finishMission={this.finishMission}/>
+        return <MissionScreen party={this.state.party} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} missionNumber={this.state.missionNumber} finishMission={this.finishMission}/>
       case 'ASSASSIN':
         return <AssassinScreen players={this.state.players} roles={this.state.roles} isGoodGuy={this.isGoodGuy} finishGame={this.finishGame} />
       case 'FINISHED':

@@ -50,14 +50,12 @@ In addition to the basic roles of "Good Guy" and "Bad Guy", there are four addit
 
 ### winning and losing
 
-The Bad Guys win if three total missions get failed.
+The Bad Guys win if three total missions get failed, _or_ if five mission proposals are rejected in a row.
 
 The Good Guys win if three total missions get passed. However, if this happens, the Assassin has a chance to kill Merlin. If the Assassin chooses correctly, the Bad Guys win.
 
 ## known bugs
 
-The fourth mission in groups of 7 or larger is supposed to require two failure to fail the mission.
+Cannot choose particular characters to play with
 
-Rejecting 5 mission proposals in a row should cause the Bad Guys to win.
-
-When typing names, the keyboard keeps disappearing.
+Oberon is missing

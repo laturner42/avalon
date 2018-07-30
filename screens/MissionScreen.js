@@ -34,7 +34,8 @@ export default class IntroducePlayersScreen extends React.Component {
     });
 
     if (remainingPlayers.length < 1) {
-      const needToFail = 1; //this.props.party.length >= 7 ? 2 : 1;
+      // The fourth mission is mission 3
+      const needToFail = this.props.party.length >= 7 && this.props.missionNumber === 3 ? 2 : 1;
       this.setState({
         passed: fail < needToFail,
         display: false,

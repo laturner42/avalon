@@ -18,6 +18,7 @@ export default class AssassinScreen extends React.Component {
   render() {
     const numGoodGuys = this.props.getGoodGuys().length;
     const numBadGuys = this.props.getBadGuys().length;
+    const total = numGoodGuys + numBadGuys;
     return (
       <View style={styles.container}>
         <Text style={{ color: '#fff', fontSize: 32, textAlign: 'center' }}>Game specifics:</Text>
@@ -25,7 +26,7 @@ export default class AssassinScreen extends React.Component {
         <Text style={{ color: '#f54', fontSize: 24, textAlign: 'center' }}>{numBadGuys} Bad Guys</Text>
         <Text style={{ color: '#fff', fontSize: 26, textAlign: 'center' }}>Mission breakdown:</Text>
         {
-          [0,1,2,3,4].map(i => <Text style={{ color: '#ddd', fontSize: 24 }} key={i}>{i+1}: {this.props.missionChart[i]} people</Text>)
+          [0,1,2,3,4].map(i => <Text style={{ color: '#ddd', fontSize: 24 }} key={i}>{i+1}{i===3 && total >= 7 && '*'}: {this.props.missionChart[i]} people</Text>)
         }
         {
           this.state.showReset &&
@@ -36,6 +37,7 @@ export default class AssassinScreen extends React.Component {
             <Text style={{ color: '#fff', fontSize: 24 }}>We're ready.</Text>
           </TouchableOpacity>
         }
+        {total >= 7 && <Text style={{ color: '#ccc', fontSize: 20, textAlign: 'center' }}>*This mission takes two failures to Fail</Text>}
       </View>
     );
   }
