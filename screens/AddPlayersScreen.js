@@ -15,7 +15,7 @@ export default class AddPlayersScreen extends React.Component {
           <View style={{width: '100%'}}>
             <Text style={{ color: '#5af', fontSize: 50, marginBottom: 25, textAlign: 'center' }}>avalon</Text>
           </View>
-          <Text style={{ color: 'white', fontSize: 24 }}>Add new player:</Text>
+          <Text style={{ color: 'white', fontSize: 24 }}>Add new players:</Text>
           <TextInput
             underlineColorAndroid="transparent"
             style={{ fontSize: 21, height: 40, width: '100%', borderColor: '#fff', borderWidth: 1, borderTopWidth: 0, marginTop: 10, marginBottom: 10, padding: 5, color: 'white'}}

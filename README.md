@@ -2,6 +2,8 @@
 
 the fun party game where you kill merlin
 
+to run locally, you need the Expo Client app on your phone; then, run these:
+
     npm i
 
     expo start
@@ -9,12 +11,12 @@ the fun party game where you kill merlin
 if you don't have expo 
 
     npm i -g expo-cli
-    
-you need the Expo Client app to play
 
-https://itunes.apple.com/app/apple-store/id982107779
+## download links
 
-https://play.google.com/store/apps/details?id=host.exp.exponent
+Available on the Android Play Store!
+
+https://play.google.com/store/apps/details?id=com.prestonandvictoriallc.avalon
     
 ## how to play
 
@@ -41,12 +43,12 @@ In addition to the basic roles of "Good Guy" and "Bad Guy", there are four addit
 **Bad Guys**
 
 - Assassin - If the Good Guys win, the Assassin gets one chance to kill Merlin. Choose wisely. Think of who knew a *little* too much.
-- Maldova - A Bad Guy with a name, who looks an awful lot like Merlin. Percy knows you're either Merlin or Maldova; use this to throw them off.
+- Morgana - A Bad Guy with a name, who looks an awful lot like Merlin. Percy knows you're either Merlin or Morgana; use this to throw them off.
 
 **Good Guys**
 
 - Merlin - Merlin must live. He is the only Good Guy who knows who the Bad Guys are. Use this knowledge wisely, but don't give away who you are.
-- Percy - Percy knows who Merlin and Maldova are, but has no idea which is which. Try to figure it out quickly and influence group decisions.
+- Percy - Percy knows who Merlin and Morgana are, but has no idea which is which. Try to figure it out quickly and influence group decisions.
 
 ### winning and losing
 

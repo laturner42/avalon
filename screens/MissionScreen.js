@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, Dimensions } from 'react-native';
 
 export default class IntroducePlayersScreen extends React.Component {
 
@@ -35,49 +35,81 @@ export default class IntroducePlayersScreen extends React.Component {
 
     if (remainingPlayers.length < 1) {
       // The fourth mission is mission 3
-      const needToFail = this.props.party.length >= 7 && this.props.missionNumber === 3 ? 2 : 1;
+      const needToFail = this.props.numPlayers >= 7 && this.props.missionNumber === 3 ? 2 : 1;
+      let displayArray = [...Array(pass)].map(()=>'pass');
+      const failArray = [...Array(fail)].map(()=>'fail');
+      displayArray = displayArray.concat(failArray);
       this.setState({
         passed: fail < needToFail,
-        display: false,
+        displayArray,
+        displayIndex: -2,
       });
       setTimeout(this.nextResult, 3300);
     }
   }
 
   nextResult = () => {
-    if (this.state.display) {
-      const { pass, fail } = this.state;
-      pass > 0 ? pass -= 1 : fail -= 1;
-      if (pass === 0 && fail === 0) {
-        this.props.finishMission(this.state.passed);
-      } else {
-        this.setState({
-          pass, fail,
-          display: false,
-        })
-        setTimeout(this.nextResult, 2000);
-      }
-    } else {
+    const displayIndex = this.state.displayIndex + 1;
+    if (displayIndex < this.state.displayArray.length) {
       this.setState({
-        display: true,
+        displayIndex,
       })
-      setTimeout(this.nextResult, 1100);
+      setTimeout(this.nextResult, 1500);
+    } else {
+      this.props.finishMission(this.state.passed);
     }
+    // if (this.state.display) {
+    //   const { pass, fail } = this.state;
+    //   pass > 0 ? pass -= 1 : fail -= 1;
+    //   if (pass === 0 && fail === 0) {
+    //     this.props.finishMission(this.state.passed);
+    //   } else {
+    //     this.setState({
+    //       pass, fail,
+    //       display: false,
+    //     })
+    //     setTimeout(this.nextResult, 2000);
+    //   }
+    // } else {
+    //   this.setState({
+    //     display: true,
+    //   })
+    //   setTimeout(this.nextResult, 1100);
+    // }
   }
 
   render() {
     const player = this.state.remainingPlayers[0];
     if (this.state.showResults) {
-      let backgroundColor = 'black';
-      if (this.state.display) {
-        backgroundColor = this.state.pass > 0 ? 'green' : 'red';
-      }
+      const blockHeight = Dimensions.get('window').height / this.props.party.length;
       return (
         <View style={{
           width: '100%',
           height: '100%',
-          backgroundColor,
-        }}/>
+          backgroundColor: 'black',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}>
+          { this.state.displayIndex == -2 && <Text style={{ color: 'white', fontSize: 28 }}>show the phone to the party</Text>}
+          {
+            this.state.displayIndex >= 0 && this.state.displayArray.slice(0, this.state.displayIndex + 1).map((pass, i) => (
+              <View style={{
+                position: 'absolute',
+                width: '100%',
+                left: 0,
+                right: 0,
+                top: blockHeight * i,
+                height: blockHeight,
+                backgroundColor: pass === 'pass' ? 'green' : 'red',
+                borderWidth: 1,
+                borderColor: 'black',
+              }}
+              key={i}
+              />
+            ))
+          }
+        </View>
       )
     }
     return (

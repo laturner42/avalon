@@ -12,7 +12,7 @@ export default class AssassinScreen extends React.Component {
       this.setState({
         showReset: true,
       })
-    }, 4000);
+    }, 2000);
   }
 
   render() {

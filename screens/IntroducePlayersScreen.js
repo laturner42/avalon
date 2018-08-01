@@ -6,6 +6,7 @@ export default class IntroducePlayersScreen extends React.Component {
   state = {
       remainingPlayers: [],
       showingPlayer: false,
+      countdown: 0,
   }
 
   componentDidMount() {
@@ -17,7 +18,19 @@ export default class IntroducePlayersScreen extends React.Component {
   showPlayer = () => {
     this.setState({
       showingPlayer: true,
+      countdown: 5,
     })
+    setTimeout(this.countItDown, 1000);
+  }
+
+  countItDown = () => {
+    const countdown = this.state.countdown - 1;
+    this.setState({
+      countdown,
+    })
+    if (countdown > 0) {
+      setTimeout(this.countItDown, 1000);
+    }
   }
 
   nextPlayer = () => {
@@ -35,7 +48,7 @@ export default class IntroducePlayersScreen extends React.Component {
   getRoleText = (role) => {
     const badGuysString = <Text style={{ color: '#f76' }}>{this.props.getBadGuys().filter(name => name !== this.state.remainingPlayers[0]).join(', ')}</Text>
     const theMs = <Text style={{ color: '#6bf' }}>
-      {Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Merlin' || this.props.roles[n] === 'Maldova').join(', ')}
+      {Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Merlin' || this.props.roles[n] === 'Morgana').join(', ')}
     </Text>;
     let string;
     let badGuysShow = false;
@@ -46,15 +59,15 @@ export default class IntroducePlayersScreen extends React.Component {
         badGuysShow = true;
         break;
       case 'Good Guy':
-        string = 'Protect Merlin.';
+        string = 'Protect Merlin. Try to figure out who your fellow Good Guys are.';
         break;
-      case 'Maldova':
+      case 'Morgana':
       case 'Bad Guy':
         string = 'Make sure Merlin dies. The other Bad Guys are: ';
         badGuysShow = true;
         break;
       case 'Percy':
-        string = 'These two are Merlin and Maldova, but you are unsure which is which: ';
+        string = 'These two are Merlin and Morgana, but you are unsure which is which: ';
         percy = true;
         break;
       case 'Assassin':
@@ -67,20 +80,25 @@ export default class IntroducePlayersScreen extends React.Component {
 
   render() {
     const player = this.state.remainingPlayers[0];
+    const playerColor = this.props.isGoodGuy(player) ? '#4f5' : '#f76';
     if (this.state.showingPlayer) {
       return (
         <View style={styles.container}>
-        <Text style={{ color: 'white', fontSize: 32 }}>{player}</Text>
-        <Text style={{ color: '#bbb', fontSize: 24 }}>your role is</Text>
-        <Text style={{ color: 'white', fontSize: 32 }}>{this.props.roles[player]}</Text>
-        {this.getRoleText(this.props.roles[player])}
-        <TouchableOpacity
-          onPress={this.nextPlayer}
-          style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20}}
-        >
-          <Text style={{ color: 'white', fontSize: 24 }}>Got it.</Text>
-        </TouchableOpacity>
-      </View>
+          <Text style={{ color: 'white', fontSize: 32 }}>{player}</Text>
+          <Text style={{ color: '#bbb', fontSize: 24 }}>your role is</Text>
+          <Text style={{ color: playerColor, fontSize: 32 }}>{this.props.roles[player]}</Text>
+          {this.getRoleText(this.props.roles[player])}
+          {
+            this.state.countdown > 0 ?
+            <Text style={{ color: 'white', fontSize: 24, padding: 6, marginTop: 20 }}>{this.state.countdown}</Text> :
+            <TouchableOpacity
+              onPress={this.nextPlayer}
+              style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20}}
+            >
+                <Text style={{ color: 'white', fontSize: 24 }}>Got it.</Text>
+            </TouchableOpacity>
+          }
+        </View>
       )
     }
     return (

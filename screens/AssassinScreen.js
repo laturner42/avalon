@@ -8,11 +8,8 @@ export default class AssassinScreen extends React.Component {
   }
 
   render() {
-    console.log('props lol', this.props);
     const assassin = this.props.players.filter(name => this.props.roles[name] === 'Assassin')[0];
     const goodGuys = this.props.players.filter(player => this.props.isGoodGuy(player));
-    console.log(assassin);
-    console.log(goodGuys);
     return (
       <View style={styles.container}>
         <Text style={{ color: '#888', fontSize: 14, textAlign: 'center' }}>The Good Guys have saved Merlin!</Text>

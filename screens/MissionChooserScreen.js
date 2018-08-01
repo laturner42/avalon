@@ -27,7 +27,7 @@ export default class MissionChooserScreen extends React.Component {
           <Text style={{ color: '#6bf' }}>{this.props.players[this.props.missionLeader]}</Text>,
           you are the Mission Leader!
         </Text>
-        <Text style={{ color: '#aaa', fontSize: 24, margin: 5 }}>Choose {this.props.missionSize}</Text>
+        <Text style={{ color: '#aaa', fontSize: 24, margin: 5 }}>Mission {this.props.missionNumber + 1}: Choose {this.props.missionSize}</Text>
         <ScrollView style={{ maxHeight: '50%' }}>
           {
             this.props.players.map((player) => (

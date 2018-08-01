@@ -26,7 +26,7 @@ export default class App extends React.Component {
   }
 
   goodRoles = ['Merlin', 'Percy', 'Good Guy'];
-  badRoles = ['Maldova', 'Assassin', 'Bad Guy'];
+  badRoles = ['Morgana', 'Assassin', 'Bad Guy'];
 
   getGoodGuys = () => Object.keys(this.state.roles).filter(name => this.goodRoles.includes(this.state.roles[name]));
   getBadGuys = () => Object.keys(this.state.roles).filter(name => this.badRoles.includes(this.state.roles[name]));
@@ -123,7 +123,6 @@ export default class App extends React.Component {
 
 
   finishMission = (passed) => {
-    console.log('the roles are', this.state.roles);
     let passedMissions = this.state.passedMissions;
     let failedMissions = this.state.failedMissions
     if (passed) {
@@ -142,9 +141,8 @@ export default class App extends React.Component {
       })
     } else {
       if (failedMissions >= 3) {
-        finishGame(false);
+        this.finishGame(false);
       } else {
-        console.log('Gonna assassinate');
         this.setState({
           STATE_VIEW: 'ASSASSIN'
         })
@@ -163,7 +161,7 @@ export default class App extends React.Component {
     
     let remainingRoles = [
       'Merlin',
-      'Maldova',
+      'Morgana',
       'Assassin',
       'Percy',
     ];
@@ -200,22 +198,21 @@ export default class App extends React.Component {
       case 'SHOW_RULES':
         return <RulesScreen getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} missionChart={this.missionSizeChart[this.state.players.length]} iUnderstand={this.iUnderstand} />
       case 'INTRODUCTIONS':
-        return <IntroducePlayersScreen roles={this.state.roles} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} finishIntroductions={this.finishIntroductions} />
+        return <IntroducePlayersScreen roles={this.state.roles} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} isGoodGuy={this.isGoodGuy} finishIntroductions={this.finishIntroductions} />
       case 'CHOOSE_MISSION':
-        return <MissionChooserScreen missionLeader={this.state.missionLeader} missionSize={Math.round(this.state.missionSize)} players={this.state.players} getMissionApproval={this.getMissionApproval} />
+        return <MissionChooserScreen missionLeader={this.state.missionLeader} missionSize={Math.round(this.state.missionSize)} missionNumber={this.state.missionNumber} players={this.state.players} getMissionApproval={this.getMissionApproval} />
       case 'APPROVAL':
         return <MissionApprovalScreen party={this.state.party} denyMission={this.denyMission} approveMission={this.approveMission}/>
       case 'GO_ON_MISSION':
-        return <MissionScreen party={this.state.party} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} missionNumber={this.state.missionNumber} finishMission={this.finishMission}/>
+        return <MissionScreen party={this.state.party} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} numPlayers={this.state.players.length} missionNumber={this.state.missionNumber} finishMission={this.finishMission}/>
       case 'ASSASSIN':
         return <AssassinScreen players={this.state.players} roles={this.state.roles} isGoodGuy={this.isGoodGuy} finishGame={this.finishGame} />
       case 'FINISHED':
-        return <FinishScreen players={this.state.players} reset={this.reset} roles={this.state.roles} goodGuysWin={this.state.goodGuysWin} />
+        return <FinishScreen players={this.state.players} reset={this.reset} isGoodGuy={this.isGoodGuy} roles={this.state.roles} goodGuysWin={this.state.goodGuysWin} />
     }
   }
 
   render() {
-    console.log(this.state);
     return this.getScreen();
   }
 }
