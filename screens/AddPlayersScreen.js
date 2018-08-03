@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, ScrollView, View, TextInput, Button, TouchableOpacity, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, ScrollView, View, TextInput, TouchableOpacity } from 'react-native';
 
 export default class AddPlayersScreen extends React.Component {
 

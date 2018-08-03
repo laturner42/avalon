@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import _ from 'lodash';
 
 import AddPlayersScreen from './screens/AddPlayersScreen';
@@ -15,7 +15,7 @@ import SettingsScreen from './screens/SettingsScreen';
 export default class App extends React.Component {
 
   state = {
-    players: [],
+    players: ['a', 'b', 'c', 'd', 'e', 'f'],
     availableRoles: [ 'Merlin', 'Morgana', 'Assassin', 'Percy' ],
     roles: {},
     STATE_VIEW: 'CHANGE_SETTINGS',
@@ -38,7 +38,6 @@ export default class App extends React.Component {
   addAvailableRoles = (roles) => {
     const availableRoles = this.state.availableRoles.slice();
     roles.map(role => availableRoles.push(role));
-    console.log(availableRoles);
     this.setState({
       availableRoles,
     })
@@ -46,14 +45,12 @@ export default class App extends React.Component {
 
   removeAvailableRoles = (roles) => {
     const availableRoles = this.state.availableRoles.slice();
-    console.log(roles);
     roles.map(role => {
       const i = availableRoles.indexOf(role);
       if (i >= 0) {
         availableRoles.splice(i, 1);
       }
     })
-    console.log(availableRoles);
     this.setState({
       availableRoles,
     })
@@ -114,8 +111,9 @@ export default class App extends React.Component {
   }
 
   getMissionApproval = (party) => {
-    if (party.includes(this.state.players[this.state.missionLeader])) {
-      const i = party.indexOf(this.state.missionLeader);
+    const partyLeader = this.state.players[this.state.missionLeader]
+    if (party.includes(partyLeader)) {
+      const i = party.indexOf(partyLeader);
       const p = party.splice(i, 1)[0];
       party.unshift(p);
     }
@@ -258,7 +256,7 @@ export default class App extends React.Component {
       case 'GO_ON_MISSION':
         return <MissionScreen party={this.state.party} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} numPlayers={this.state.players.length} missionNumber={this.state.missionNumber} finishMission={this.finishMission}/>
       case 'ASSASSIN':
-        return <AssassinScreen players={this.state.players} roles={this.state.roles} isGoodGuy={this.isGoodGuy} finishGame={this.finishGame} />
+        return <AssassinScreen players={this.state.players} roles={this.state.roles} isGoodGuy={this.isGoodGuy} finishGame={this.finishGame} availableRoles={this.state.availableRoles} />
       case 'FINISHED':
         return <FinishScreen players={this.state.players} reset={this.reset} isGoodGuy={this.isGoodGuy} roles={this.state.roles} goodGuysWin={this.state.goodGuysWin} />
     }
@@ -268,16 +266,3 @@ export default class App extends React.Component {
     return this.getScreen();
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#000',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderColor: 'black',
-    borderWidth: 1,
-    width: '100%',
-    height: '100%',
-  },
-});

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, ScrollView } from 'react-native';
 
 export default class AssassinScreen extends React.Component {
 

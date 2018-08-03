@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 
 export default class IntroducePlayersScreen extends React.Component {
 
@@ -20,7 +20,7 @@ export default class IntroducePlayersScreen extends React.Component {
       showingPlayer: true,
       countdown: 5,
     })
-    setTimeout(this.countItDown, 1000);
+    setTimeout(this.countItDown, 1); //000);
   }
 
   countItDown = () => {
@@ -29,7 +29,7 @@ export default class IntroducePlayersScreen extends React.Component {
       countdown,
     })
     if (countdown > 0) {
-      setTimeout(this.countItDown, 1000);
+      setTimeout(this.countItDown, 1); //000);
     }
   }
 
