@@ -10,13 +10,15 @@ import MissionApprovalScreen from './screens/MissionApprovalScreen';
 import MissionScreen from './screens/MissionScreen';
 import AssassinScreen from './screens/AssassinScreen';
 import FinishScreen from './screens/FinishScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 export default class App extends React.Component {
 
   state = {
     players: [],
+    availableRoles: [ 'Merlin', 'Morgana', 'Assassin', 'Percy' ],
     roles: {},
-    STATE_VIEW: 'ADD_PLAYERS',
+    STATE_VIEW: 'CHANGE_SETTINGS',
     missionNumber: 0,
     missionLeader: 0,
     missionSize: 3,
@@ -25,12 +27,37 @@ export default class App extends React.Component {
     consecutiveFailures: 0,
   }
 
-  goodRoles = ['Merlin', 'Percy', 'Good Guy'];
-  badRoles = ['Morgana', 'Assassin', 'Bad Guy'];
+  goodRoles = ['Merlin', 'Percy', 'Lover', 'Good Guy'];
+  badRoles = ['Morgana', 'Assassin', 'Oberoff', 'Bad Guy'];
 
   getGoodGuys = () => Object.keys(this.state.roles).filter(name => this.goodRoles.includes(this.state.roles[name]));
   getBadGuys = () => Object.keys(this.state.roles).filter(name => this.badRoles.includes(this.state.roles[name]));
+  getLovers = () => Object.keys(this.state.roles).filter(name => this.state.roles[name] === 'Lover');
   isGoodGuy = (player) => this.goodRoles.includes(this.state.roles[player]);
+
+  addAvailableRoles = (roles) => {
+    const availableRoles = this.state.availableRoles.slice();
+    roles.map(role => availableRoles.push(role));
+    console.log(availableRoles);
+    this.setState({
+      availableRoles,
+    })
+  }
+
+  removeAvailableRoles = (roles) => {
+    const availableRoles = this.state.availableRoles.slice();
+    console.log(roles);
+    roles.map(role => {
+      const i = availableRoles.indexOf(role);
+      if (i >= 0) {
+        availableRoles.splice(i, 1);
+      }
+    })
+    console.log(availableRoles);
+    this.setState({
+      availableRoles,
+    })
+  }
 
   goodGuysPerPlayers = {
     5: 3,
@@ -87,6 +114,11 @@ export default class App extends React.Component {
   }
 
   getMissionApproval = (party) => {
+    if (party.includes(this.state.players[this.state.missionLeader])) {
+      const i = party.indexOf(this.state.missionLeader);
+      const p = party.splice(i, 1)[0];
+      party.unshift(p);
+    }
     this.setState({
       party,
       STATE_VIEW: 'APPROVAL'
@@ -156,17 +188,29 @@ export default class App extends React.Component {
     })
   }
 
+  canPlayWithRoles = () => {
+    const numGoodGuys = this.goodGuysPerPlayers[this.state.players.length];
+    const numBadGuys = this.state.players.length - this.goodGuysPerPlayers[this.state.players.length];
+    const goodRoles = this.state.availableRoles.filter(role => this.goodRoles.includes(role)).length;
+    const badRoles = this.state.availableRoles.filter(role => this.badRoles.includes(role)).length;
+    return numGoodGuys >= goodRoles && numBadGuys >= badRoles;
+  }
+
   begin = () => {
-    if (this.state.players.length < 5) return;
+    if (this.state.players.length < 5) {
+      Alert.alert('You need at least 5 players.');
+      return;
+    }
+    if (!this.canPlayWithRoles()) {
+      Alert.alert('You don\'t have enough players to fill the currently selected roles.');
+      return;
+    }
     
-    let remainingRoles = [
-      'Merlin',
-      'Morgana',
-      'Assassin',
-      'Percy',
-    ];
-    while (remainingRoles.length - 2 < this.goodGuysPerPlayers[this.state.players.length]) {
+    let remainingRoles = this.state.availableRoles.slice();
+    let goodRoles = remainingRoles.filter(role => this.goodRoles.includes(role));
+    while (goodRoles.length < this.goodGuysPerPlayers[this.state.players.length]) {
       remainingRoles.push('Good Guy');
+      goodRoles = remainingRoles.filter(role => this.goodRoles.includes(role));
     }
     while (remainingRoles.length < this.state.players.length) {
       remainingRoles.push('Bad Guy');
@@ -191,14 +235,22 @@ export default class App extends React.Component {
     })
   }
 
+  changeSettings = () => {
+    this.setState({
+      STATE_VIEW: 'CHANGE_SETTINGS',
+    })
+  }
+
   getScreen = () => {
     switch(this.state.STATE_VIEW) {
       case 'ADD_PLAYERS':
-        return <AddPlayersScreen addPlayer={this.addPlayer} reset={this.reset} players={this.state.players} begin={this.begin} />
+        return <AddPlayersScreen addPlayer={this.addPlayer} reset={this.reset} players={this.state.players} canPlayWithRoles={this.canPlayWithRoles} begin={this.begin} changeSettings={this.changeSettings} />
+      case 'CHANGE_SETTINGS':
+        return <SettingsScreen availableRoles={this.state.availableRoles} addAvailableRoles={this.addAvailableRoles} removeAvailableRoles={this.removeAvailableRoles} reset={this.reset} />
       case 'SHOW_RULES':
         return <RulesScreen getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} missionChart={this.missionSizeChart[this.state.players.length]} iUnderstand={this.iUnderstand} />
       case 'INTRODUCTIONS':
-        return <IntroducePlayersScreen roles={this.state.roles} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} isGoodGuy={this.isGoodGuy} finishIntroductions={this.finishIntroductions} />
+        return <IntroducePlayersScreen roles={this.state.roles} getLovers={this.getLovers} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} isGoodGuy={this.isGoodGuy} finishIntroductions={this.finishIntroductions} />
       case 'CHOOSE_MISSION':
         return <MissionChooserScreen missionLeader={this.state.missionLeader} missionSize={Math.round(this.state.missionSize)} missionNumber={this.state.missionNumber} players={this.state.players} getMissionApproval={this.getMissionApproval} />
       case 'APPROVAL':

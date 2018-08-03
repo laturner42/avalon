@@ -7,19 +7,6 @@ export default class MissionChooserScreen extends React.Component {
     playersChosen: [],
   }
 
-  selectPlayer = (player) => {
-    const playersChosen = this.state.playersChosen.slice();
-    const i = playersChosen.indexOf(player);
-    if (i >= 0) {
-      playersChosen.splice(i, 1);
-    } else if (playersChosen.length < this.props.missionSize){
-      playersChosen.push(player);
-    }
-    this.setState({
-      playersChosen,
-    })
-  }
-
   render() {
     return (
       <View style={styles.container}>

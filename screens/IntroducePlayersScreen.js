@@ -50,9 +50,12 @@ export default class IntroducePlayersScreen extends React.Component {
     const theMs = <Text style={{ color: '#6bf' }}>
       {Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Merlin' || this.props.roles[n] === 'Morgana').join(', ')}
     </Text>;
+    const loversString = <Text style={{ color: '#4f5' }}>{this.props.getLovers().filter(name => name !== this.state.remainingPlayers[0]).join(', ')}</Text>
+
     let string;
     let badGuysShow = false;
     let percy = false;
+    let lover = false;
     switch(role) {
       case 'Merlin':
         string = 'Don\'t die. The Bad Guys are: ';
@@ -70,12 +73,19 @@ export default class IntroducePlayersScreen extends React.Component {
         string = 'These two are Merlin and Morgana, but you are unsure which is which: ';
         percy = true;
         break;
+      case 'Lover':
+        string = 'Your fellow lover is: ';
+        lover = true;
+        break;
       case 'Assassin':
         string = 'Kill Merlin. The other Bad Guys are: ';
         badGuysShow = true;
         break;
+      case 'Oberoff':
+        string = 'You have no idea who your fellow Bad Guys are.';
+        break;
       }
-    return <Text style={{ color: 'white', fontSize: 24, textAlign: 'center', }}>{string} {badGuysShow && badGuysString}{percy && theMs}</Text>;
+    return <Text style={{ color: 'white', fontSize: 24, textAlign: 'center', }}>{string} {badGuysShow && badGuysString}{percy && theMs}{lover && loversString}</Text>;
   }
 
   render() {

@@ -6,7 +6,7 @@ export default class AddPlayersScreen extends React.Component {
   state = { newName: '' }
 
   render() {
-    const beginColor = this.props.players.length >= 5 ? '#4f5' : '#666';
+    const beginColor = this.props.canPlayWithRoles() ? '#4f5' : '#777';
     return (
         <ScrollView
           style={{ backgroundColor: 'black' }}
@@ -49,6 +49,12 @@ export default class AddPlayersScreen extends React.Component {
               <Text style={{ color: beginColor, fontSize: 24 }}>Begin</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+              onPress={this.props.changeSettings}
+              style={{borderColor: '#6af', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, margin: 10}}
+            >
+              <Text style={{ color: '#6af', fontSize: 24 }}>Change Settings</Text>
+          </TouchableOpacity>
           { this.props.players.length > 0 && <Text style={{ color: 'white', fontSize: 24 }}>Current player list:</Text> }
           {
             this.props.players.map((player, i) => <Text style={{ color: '#bbb', fontSize: 22 }} key={player}>{i+1}. {player}</Text>)
