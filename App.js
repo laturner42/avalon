@@ -15,7 +15,7 @@ import SettingsScreen from './screens/SettingsScreen';
 export default class App extends React.Component {
 
   state = {
-    players: ['a', 'b', 'c', 'd', 'e', 'f'],
+    players: [],
     availableRoles: [ 'Merlin', 'Morgana', 'Assassin', 'Percy' ],
     roles: {},
     STATE_VIEW: 'CHANGE_SETTINGS',
