@@ -9,31 +9,51 @@ export default class SettingsScreen extends React.Component {
 
   toggleMerlin = () => {
     if (this.props.availableRoles.includes('Merlin')) {
-      this.props.removeAvailableRoles(['Merlin']);
+      const removeRoles = ['Merlin', 'Mordred'];
+      if (!this.props.availableRoles.includes('Lover')) removeRoles.push('Assassin');
+      this.props.removeAvailableRoles(removeRoles);
     } else {
-      this.props.addAvailableRoles(['Merlin']);
+      this.props.addAvailableRoles(['Merlin', 'Assassin']);
+    }
+  }
+
+  toggleMordred = () => {
+    if (this.props.availableRoles.includes('Mordred')) {
+      this.props.removeAvailableRoles(['Mordred']);
+    } else if (this.props.availableRoles.includes('Merlin')) {
+      this.props.addAvailableRoles(['Mordred']);
     }
   }
 
   toggleAssassin = () => {
     if (this.props.availableRoles.includes('Assassin')) {
-      this.props.removeAvailableRoles(['Assassin']);
-    } else {
+      this.props.removeAvailableRoles(['Assassin', 'Merlin']);
+    } else if (this.props.availableRoles.includes('Merlin') || this.props.availableRoles.includes('Lover')){
       this.props.addAvailableRoles(['Assassin']);
     }
   }
 
-  togglePercyAndMorgana = () => {
+  togglePercy = () => {
     if (this.props.availableRoles.includes('Percy')) {
       this.props.removeAvailableRoles(['Percy', 'Morgana']);
     } else {
-      this.props.addAvailableRoles(['Percy', 'Morgana']);
+      this.props.addAvailableRoles(['Percy']);
+    }
+  }
+
+  toggleMorgana = () => {
+    if (this.props.availableRoles.includes('Morgana')) {
+      this.props.removeAvailableRoles(['Morgana']);
+    } else if (this.props.availableRoles.includes('Percy')){
+      this.props.addAvailableRoles(['Morgana']);
     }
   }
 
   toggleLovers = () => {
     if (this.props.availableRoles.includes('Lover')) {
-      this.props.removeAvailableRoles(['Lover', 'Lover']);
+      const removeRoles = ['Lover', 'Lover'];
+      if (!this.props.availableRoles.includes('Merlin')) removeRoles.push('Assassin');
+      this.props.removeAvailableRoles(removeRoles);
     } else {
       this.props.addAvailableRoles(['Lover', 'Lover']);
     }
@@ -47,13 +67,14 @@ export default class SettingsScreen extends React.Component {
     }
   }
 
-  option = (title, callback, selected) => (
+  option = (title, callback, selected, tabbed) => (
     <View style={{
       width: '100%',
       flexWrap: 'wrap', 
       alignItems: 'flex-start',
       flexDirection: 'row',
       margin: 10,
+      paddingLeft: tabbed ? 20 : 0,
     }} key={title}>
       <TouchableOpacity
         onPress={callback}
@@ -72,11 +93,17 @@ export default class SettingsScreen extends React.Component {
           Choose Playable Roles
         </Text>
         <Text style={{ color: '#aaa', fontSize: 24, margin: 5 }}>Make sure you consider game balance when picking.</Text>
-        <ScrollView style={{ maxHeight: '50%' }}>
+        <ScrollView style={{ maxHeight: '50%', marginBottom: 10 }}>
           {this.option(
             'Merlin',
             this.toggleMerlin,
             this.props.availableRoles.includes('Merlin')
+          )}
+          {this.option(
+            'Mordred',
+            this.toggleMordred,
+            this.props.availableRoles.includes('Mordred'),
+            true
           )}
           {this.option(
             'Assassin',
@@ -84,9 +111,15 @@ export default class SettingsScreen extends React.Component {
             this.props.availableRoles.includes('Assassin')
           )}
           {this.option(
-            'Percy & Morgana',
-            this.togglePercyAndMorgana,
+            'Percy',
+            this.togglePercy,
             this.props.availableRoles.includes('Percy')
+          )}
+          {this.option(
+            'Morgana',
+            this.toggleMorgana,
+            this.props.availableRoles.includes('Morgana'),
+            true
           )}
           {this.option(
             'The Lovers',
@@ -105,7 +138,7 @@ export default class SettingsScreen extends React.Component {
         >
           <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Save</Text>
         </TouchableOpacity>
-        <Text style={{ width: '100%', color: '#888', fontSize: 16, textAlign: 'center', margin: 7 }}>version 1.1.0</Text>
+        <Text style={{ width: '100%', color: '#888', fontSize: 16, textAlign: 'center', margin: 7 }}>version 1.2.0</Text>
       </View>
     );
   }

@@ -28,16 +28,19 @@ export default class App extends React.Component {
   }
 
   goodRoles = ['Merlin', 'Percy', 'Lover', 'Good Guy'];
-  badRoles = ['Morgana', 'Assassin', 'Oberoff', 'Bad Guy'];
+  badRoles = ['Morgana', 'Assassin', 'Oberoff', 'Mordred', 'Bad Guy'];
 
   getGoodGuys = () => Object.keys(this.state.roles).filter(name => this.goodRoles.includes(this.state.roles[name]));
-  getBadGuys = () => Object.keys(this.state.roles).filter(name => this.badRoles.includes(this.state.roles[name]));
+  getBadGuys = (excludeMordred) => Object.keys(this.state.roles).filter(name =>
+    this.badRoles.includes(this.state.roles[name]) && !(excludeMordred && this.state.roles[name] === 'Mordred'));
   getLovers = () => Object.keys(this.state.roles).filter(name => this.state.roles[name] === 'Lover');
   isGoodGuy = (player) => this.goodRoles.includes(this.state.roles[player]);
 
   addAvailableRoles = (roles) => {
     const availableRoles = this.state.availableRoles.slice();
-    roles.map(role => availableRoles.push(role));
+    roles.map(role => {
+      if (!availableRoles.includes(role) || role === 'Lover') availableRoles.push(role)
+    });
     this.setState({
       availableRoles,
     })
@@ -172,7 +175,7 @@ export default class App extends React.Component {
     } else {
       if (failedMissions >= 3) {
         this.finishGame(false);
-      } else if (this.state.availableRoles.includes('Lover') || this.state.availableRoles.includes('Merlin')) {
+      } else if (this.state.availableRoles.includes('Assassin')) {
         this.setState({
           STATE_VIEW: 'ASSASSIN'
         })

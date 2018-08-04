@@ -46,45 +46,60 @@ export default class IntroducePlayersScreen extends React.Component {
   }
 
   getRoleText = (role) => {
-    const badGuysString = <Text style={{ color: '#f76' }}>{this.props.getBadGuys().filter(name => name !== this.state.remainingPlayers[0]).join(', ')}</Text>
+    const badGuysArray = this.props.getBadGuys(role === 'Merlin');
+    const foundMerlin = Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Merlin')[0];
+    const foundMorgana = Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Morgana')[0];
+
     const theMs = <Text style={{ color: '#6bf' }}>
       {Object.keys(this.props.roles).filter(n => this.props.roles[n] === 'Merlin' || this.props.roles[n] === 'Morgana').join(', ')}
     </Text>;
-    const loversString = <Text style={{ color: '#4f5' }}>{this.props.getLovers().filter(name => name !== this.state.remainingPlayers[0]).join(', ')}</Text>
+    const foundLovers = this.props.getLovers();
+    const loversString = <Text style={{ color: '#4f5' }}>{foundLovers.filter(name => name !== this.state.remainingPlayers[0]).join(', ')}</Text>
 
-    let string;
+    let string = '';
     let badGuysShow = false;
     let percy = false;
     let lover = false;
     switch(role) {
       case 'Merlin':
-        string = 'Don\'t die. The Bad Guys are: ';
+        string = 'Don\'t get caught. The Bad Guys you found are: ';
         badGuysShow = true;
         break;
       case 'Good Guy':
-        string = 'Protect Merlin. Try to figure out who your fellow Good Guys are.';
+        string = 'Good must prevail. Try to figure out who your fellow Good Guys are.';
+        break;
+      case 'Mordred':
+        string = 'Merlin doesn\'t know who you are. The other Bad Guys are: ';
+        badGuysShow = true;
         break;
       case 'Morgana':
       case 'Bad Guy':
-        string = 'Make sure Merlin dies. The other Bad Guys are: ';
+        string += 'Evil must prevail. The other Bad Guys are: ';
         badGuysShow = true;
         break;
       case 'Percy':
-        string = 'These two are Merlin and Morgana, but you are unsure which is which: ';
-        percy = true;
+      if (foundMerlin && foundMorgana) string = 'These two are Merlin and Morgana, but you are unsure which is which: ';
+      else if (foundMerlin) string = 'Protect Merlin at all costs. Merlin is: ';
+      else if (foundMorgana) string = 'Good must prevail. Morgana is: ';
+      else string = 'You didn\'t figure anything else beforehand, sorry.';
+      percy = true;
         break;
       case 'Lover':
         string = 'Your fellow lover is: ';
         lover = true;
         break;
       case 'Assassin':
-        string = 'Kill Merlin. The other Bad Guys are: ';
+        if (foundMerlin && foundLovers.length) string = 'Kill Merlin or the Lovers.'
+        else if (foundMerlin) string = 'Kill Merlin.';
+        else if (foundLovers.length) string = 'Kill the Lovers.';
+        string += 'The other Bad Guys are: ';
         badGuysShow = true;
         break;
       case 'Oberoff':
         string = 'You have no idea who your fellow Bad Guys are.';
         break;
       }
+    const badGuysString = <Text style={{ color: '#f76' }}>{badGuysArray.filter(name => name !== this.state.remainingPlayers[0]).join(', ')}</Text>    
     return <Text style={{ color: 'white', fontSize: 24, textAlign: 'center', }}>{string} {badGuysShow && badGuysString}{percy && theMs}{lover && loversString}</Text>;
   }
 

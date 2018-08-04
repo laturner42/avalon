@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 export default class AssassinScreen extends React.Component {
 
   state = {
-    target: this.props.availableRoles.includes('Lover') ? 'The Lovers' : 'Merlin',
+    target: this.props.availableRoles.includes('Merlin') ? 'Merlin' : 'The Lovers',
     chosen: undefined,
   }
 
