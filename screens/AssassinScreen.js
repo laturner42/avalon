@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 export default class AssassinScreen extends React.Component {
 
   state = {
-    target: 'Merlin',
+    target: this.props.availableRoles.includes('Lover') ? 'The Lovers' : 'Merlin',
     chosen: undefined,
   }
 
@@ -46,7 +46,7 @@ export default class AssassinScreen extends React.Component {
           ))
         }
         {
-          this.props.availableRoles.includes('Lover') && !this.state.chosen &&
+          this.props.availableRoles.includes('Lover') && this.props.availableRoles.includes('Merlin') && !this.state.chosen &&
           <TouchableOpacity
             onPress={() => this.setState({ target: this.getOtherTarget() })}
             style={{borderColor: '#6bf', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20, width: '100%'}}

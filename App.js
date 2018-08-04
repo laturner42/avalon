@@ -172,10 +172,12 @@ export default class App extends React.Component {
     } else {
       if (failedMissions >= 3) {
         this.finishGame(false);
-      } else {
+      } else if (this.state.availableRoles.includes('Lover') || this.state.availableRoles.includes('Merlin')) {
         this.setState({
           STATE_VIEW: 'ASSASSIN'
         })
+      } else {
+        this.finishGame(true);
       }
     }
   }

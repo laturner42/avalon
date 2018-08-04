@@ -7,11 +7,19 @@ export default class SettingsScreen extends React.Component {
     playersChosen: [],
   }
 
-  toggleMerlinAndAssassin = () => {
+  toggleMerlin = () => {
     if (this.props.availableRoles.includes('Merlin')) {
-      this.props.removeAvailableRoles(['Merlin', 'Assassin']);
+      this.props.removeAvailableRoles(['Merlin']);
     } else {
-      this.props.addAvailableRoles(['Merlin', 'Assassin']);
+      this.props.addAvailableRoles(['Merlin']);
+    }
+  }
+
+  toggleAssassin = () => {
+    if (this.props.availableRoles.includes('Assassin')) {
+      this.props.removeAvailableRoles(['Assassin']);
+    } else {
+      this.props.addAvailableRoles(['Assassin']);
     }
   }
 
@@ -66,9 +74,14 @@ export default class SettingsScreen extends React.Component {
         <Text style={{ color: '#aaa', fontSize: 24, margin: 5 }}>Make sure you consider game balance when picking.</Text>
         <ScrollView style={{ maxHeight: '50%' }}>
           {this.option(
-            'Merlin & The Assassin',
-            this.toggleMerlinAndAssassin,
+            'Merlin',
+            this.toggleMerlin,
             this.props.availableRoles.includes('Merlin')
+          )}
+          {this.option(
+            'Assassin',
+            this.toggleAssassin,
+            this.props.availableRoles.includes('Assassin')
           )}
           {this.option(
             'Percy & Morgana',
@@ -92,6 +105,7 @@ export default class SettingsScreen extends React.Component {
         >
           <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Save</Text>
         </TouchableOpacity>
+        <Text style={{ width: '100%', color: '#888', fontSize: 16, textAlign: 'center', margin: 7 }}>version 1.1.0</Text>
       </View>
     );
   }
