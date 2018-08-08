@@ -58,8 +58,6 @@ The Good Guys win if three total missions get passed. However, if this happens, 
 
 ## known bugs
 
-Cannot choose particular characters to play with
-
-Oberon is missing
-
 Cannot stop a game that has been started without closing the app
+
+Some character combination choosing is a little wonky

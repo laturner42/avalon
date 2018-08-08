@@ -1,5 +1,7 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { WebBrowser } from 'expo';
 
 export default class SettingsScreen extends React.Component {
 
@@ -90,9 +92,9 @@ export default class SettingsScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Text style={{ color: 'white', fontSize: 30 }}>
-          Choose Playable Roles
+          Choose Roles
         </Text>
-        <Text style={{ color: '#aaa', fontSize: 24, margin: 5 }}>Make sure you consider game balance when picking.</Text>
+        <Text style={{ color: '#aaa', fontSize: 20, margin: 5 }}>Remember to consider game balance when picking.</Text>
         <ScrollView style={{ maxHeight: '50%', marginBottom: 10 }}>
           {this.option(
             'Merlin',
@@ -138,7 +140,19 @@ export default class SettingsScreen extends React.Component {
         >
           <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Save</Text>
         </TouchableOpacity>
-        <Text style={{ width: '100%', color: '#888', fontSize: 16, textAlign: 'center', margin: 7 }}>version 1.2.0</Text>
+        <TouchableOpacity
+          onPress={() => WebBrowser.openBrowserAsync('https://preston-victoria-llc.firebaseapp.com/avalon-rules.html')}
+          style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', margin: 10 }}
+        >
+          <Text style={{ color: '#6bf', fontSize: 26 }}>{'Rules '}</Text>
+          <Ionicons
+            name={Platform.OS === 'ios' ? 'ios-arrow-forward' : 'md-arrow-forward'}
+            size={32}
+            color="#6bf"
+            style={{ marginRight: 15}}
+          />
+        </TouchableOpacity>
+        <Text style={{ width: '100%', color: '#888', fontSize: 16, textAlign: 'center', margin: 1 }}>version 1.2.0</Text>
       </View>
     );
   }

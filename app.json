@@ -25,7 +25,7 @@
     ],
     "android": {
       "package": "com.prestonandvictoriallc.avalon",
-      "versionCode": 10,
+      "versionCode": 120,
       "adaptiveIcon": {
         "backgroundColor": "#000000"
       }
