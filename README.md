@@ -20,7 +20,7 @@ https://play.google.com/store/apps/details?id=com.prestonandvictoriallc.avalon
     
 ## how to play
 
-Rules are now maintained here: https://preston-victoria-llc.firebaseapp.com/avalon-rules.html
+Rules are now maintained here: https://prestonandvictoria.com/avalon-rules.html
 
 ## known bugs
 
