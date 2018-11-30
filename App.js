@@ -11,6 +11,7 @@ import MissionScreen from './screens/MissionScreen';
 import AssassinScreen from './screens/AssassinScreen';
 import FinishScreen from './screens/FinishScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import MissionBreakdownScreen from './screens/MissionBreakdownScreen';
 
 export default class App extends React.Component {
 
@@ -25,6 +26,8 @@ export default class App extends React.Component {
     passedMissions: 0,
     failedMissions: 0,
     consecutiveFailures: 0,
+    missionResults: [],
+    missionParties: {},
   }
 
   goodRoles = ['Merlin', 'Percy', 'Lover', 'Good Guy'];
@@ -87,6 +90,8 @@ export default class App extends React.Component {
       consecutiveFailures: 0,
       STATE_VIEW: 'ADD_PLAYERS',
       roles: {},
+      missionResults: [],
+      missionParties: {},
     })
   }
 
@@ -155,9 +160,13 @@ export default class App extends React.Component {
   }
 
 
-  finishMission = (passed) => {
+  finishMission = (passed, party, numPassed) => {
     let passedMissions = this.state.passedMissions;
     let failedMissions = this.state.failedMissions
+    const missionResults = this.state.missionResults.slice();
+    const missionParties = Object.assign({}, this.state.missionParties);
+    missionResults.push(numPassed);
+    missionParties[this.state.missionNumber] = party;
     if (passed) {
       passedMissions += 1;
     } else {
@@ -168,9 +177,12 @@ export default class App extends React.Component {
       this.setState({
         STATE_VIEW: 'CHOOSE_MISSION',
         missionLeader: this.nextMissionLeader(),
-        passedMissions, failedMissions,
+        passedMissions,
+        failedMissions,
         missionSize: this.missionSizeChart[this.state.players.length][missionNumber],
-        missionNumber: missionNumber,
+        missionNumber,
+        missionResults,
+        missionParties,
       })
     } else {
       if (failedMissions >= 3) {
@@ -238,6 +250,18 @@ export default class App extends React.Component {
     })
   }
 
+  showLiveMissionBreakdown = () => {
+    this.setState({
+      STATE_VIEW: 'MISSION_BREAKDOWN',
+    })
+  }
+
+  goBackToMissionChooser = () => {
+    this.setState({
+      STATE_VIEW: 'CHOOSE_MISSION',
+    })
+  }
+
   changeSettings = () => {
     this.setState({
       STATE_VIEW: 'CHANGE_SETTINGS',
@@ -255,7 +279,9 @@ export default class App extends React.Component {
       case 'INTRODUCTIONS':
         return <IntroducePlayersScreen roles={this.state.roles} getLovers={this.getLovers} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} isGoodGuy={this.isGoodGuy} finishIntroductions={this.finishIntroductions} />
       case 'CHOOSE_MISSION':
-        return <MissionChooserScreen missionLeader={this.state.missionLeader} missionSize={Math.round(this.state.missionSize)} missionNumber={this.state.missionNumber} players={this.state.players} getMissionApproval={this.getMissionApproval} />
+        return <MissionChooserScreen showLiveMissionBreakdown={this.showLiveMissionBreakdown} missionLeader={this.state.missionLeader} missionSize={Math.round(this.state.missionSize)} missionNumber={this.state.missionNumber} players={this.state.players} getMissionApproval={this.getMissionApproval} />
+      case 'MISSION_BREAKDOWN':
+        return <MissionBreakdownScreen finishGame={this.finishGame} goBackToMissionChooser={this.goBackToMissionChooser} missionResults={this.state.missionResults} missionParties={this.state.missionParties} missionChart={this.missionSizeChart[this.state.players.length]} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} />
       case 'APPROVAL':
         return <MissionApprovalScreen party={this.state.party} denyMission={this.denyMission} approveMission={this.approveMission}/>
       case 'GO_ON_MISSION':

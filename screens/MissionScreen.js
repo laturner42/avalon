@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Dimensions } from 'react-native';
 
-export default class IntroducePlayersScreen extends React.Component {
+export default class MissionScreen extends React.Component {
 
   state = {
       remainingPlayers: [],
@@ -34,7 +34,7 @@ export default class IntroducePlayersScreen extends React.Component {
     });
 
     if (remainingPlayers.length < 1) {
-      // The fourth mission is mission 3
+      // The fourth mission is mission index 3
       const needToFail = this.props.numPlayers >= 7 && this.props.missionNumber === 3 ? 2 : 1;
       let displayArray = [...Array(pass)].map(()=>'pass');
       const failArray = [...Array(fail)].map(()=>'fail');
@@ -56,7 +56,7 @@ export default class IntroducePlayersScreen extends React.Component {
       })
       setTimeout(this.nextResult, 1500);
     } else {
-      this.props.finishMission(this.state.passed);
+      this.props.finishMission(this.state.passed, this.props.party, this.state.pass);
     }
     // if (this.state.display) {
     //   const { pass, fail } = this.state;

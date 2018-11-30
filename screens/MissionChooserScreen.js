@@ -49,12 +49,18 @@ export default class MissionChooserScreen extends React.Component {
             ))
           }
         </ScrollView>
+        <TouchableOpacity
+          onPress={this.props.showLiveMissionBreakdown}
+          style={{borderColor: 'white', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20, width: '100%'}}
+        >
+          <Text style={{ color: '#ccc', fontSize: 26, textAlign: 'center' }}>Mission Breakdown</Text>
+        </TouchableOpacity>
         {this.state.playersChosen.length === this.props.missionSize &&
           <TouchableOpacity
             onPress={() => this.props.getMissionApproval(this.state.playersChosen)}
-            style={{borderColor: '#fff', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20, width: '100%'}}
+            style={{borderColor: 'white', borderWidth: 1, paddingLeft: 15, paddingRight: 15, paddingTop: 5, paddingBottom: 5, marginTop: 20, width: '100%'}}
           >
-            <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Propose Mission Party</Text>
+            <Text style={{ color: '#6bf', fontSize: 26, textAlign: 'center' }}>Propose Mission Party</Text>
           </TouchableOpacity>
         }
       </View>

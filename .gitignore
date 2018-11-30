@@ -4,3 +4,4 @@ npm-debug.*
 .vscode
 keystore
 *.jks
+.DS_Store

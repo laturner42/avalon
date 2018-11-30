@@ -141,7 +141,7 @@ export default class SettingsScreen extends React.Component {
           <Text style={{ color: 'white', fontSize: 26, textAlign: 'center' }}>Save</Text>
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={() => WebBrowser.openBrowserAsync('https://preston-victoria-llc.firebaseapp.com/avalon-rules.html')}
+          onPress={() => WebBrowser.openBrowserAsync('https://prestonandvictoria.com/avalon-rules.html')}
           style={{ width: '100%', flexDirection: 'row', justifyContent: 'center', margin: 10 }}
         >
           <Text style={{ color: '#6bf', fontSize: 26 }}>{'Rules '}</Text>
@@ -152,7 +152,7 @@ export default class SettingsScreen extends React.Component {
             style={{ marginRight: 15}}
           />
         </TouchableOpacity>
-        <Text style={{ width: '100%', color: '#888', fontSize: 16, textAlign: 'center', margin: 1 }}>version 1.2.0</Text>
+        <Text style={{ width: '100%', color: '#888', fontSize: 16, textAlign: 'center', margin: 1 }}>version 1.3.0</Text>
       </View>
     );
   }

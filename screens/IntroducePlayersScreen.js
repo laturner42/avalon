@@ -89,9 +89,9 @@ export default class IntroducePlayersScreen extends React.Component {
         lover = true;
         break;
       case 'Assassin':
-        if (foundMerlin && foundLovers.length) string = 'Kill Merlin or the Lovers.'
-        else if (foundMerlin) string = 'Kill Merlin.';
-        else if (foundLovers.length) string = 'Kill the Lovers.';
+        if (foundMerlin && foundLovers.length) string = 'Kill Merlin or the Lovers. '
+        else if (foundMerlin) string = 'Kill Merlin. ';
+        else if (foundLovers.length) string = 'Kill the Lovers. ';
         string += 'The other Bad Guys are: ';
         badGuysShow = true;
         break;
