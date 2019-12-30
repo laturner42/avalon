@@ -9,7 +9,7 @@
       "ios",
       "android"
     ],
-    "version": "1.4.0",
+    "version": "1.4.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -25,7 +25,7 @@
     ],
     "android": {
       "package": "com.prestonandvictoriallc.avalon",
-      "versionCode": 140,
+      "versionCode": 141,
       "adaptiveIcon": {
         "backgroundColor": "#000000"
       },

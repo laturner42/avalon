@@ -16,7 +16,7 @@ import MissionBreakdownScreen from './screens/MissionBreakdownScreen';
 export default class App extends React.Component {
 
   state = {
-    players: ['a', 'b', 'c', 'd', 'e'],
+    players: [],
     availableRoles: [ 'Merlin', 'Morgana', 'Assassin', 'Percy' ],
     roles: {},
     STATE_VIEW: 'CHANGE_SETTINGS',

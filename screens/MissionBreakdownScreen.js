@@ -68,7 +68,7 @@ export default class MissionBreakdownScreen extends React.Component {
     const total = numGoodGuys + numBadGuys;
     return (
       <View style={styles.container}>
-        <Text style={{ color: '#fff', fontSize: 32, margin: 20, textAlign: 'center' }}>Mission Breakdown</Text>
+        <Text style={{ color: '#fff', fontSize: 32, marginTop: 20, marginBottom: 20, textAlign: 'center' }}>Mission Breakdown</Text>
         <ScrollView style={styles.scroller}>
           {
             [0,1,2,3,4].map(this.renderMission)
