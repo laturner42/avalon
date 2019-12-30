@@ -15,7 +15,7 @@ export default class MissionBreakdownScreen extends React.Component {
 
     const boxes = [];
 
-    const { missionResults, missionParties } = this.props;
+    const { missionResults, missionParties, missionLeaders } = this.props;
 
     for (let j=0; j<this.props.missionChart[i]; j++) {
       let color = missionResults[i] ? '#4d5' : '#bbb';
@@ -36,11 +36,16 @@ export default class MissionBreakdownScreen extends React.Component {
     return (
       <View key={i} style={{ marginBottom: 10 }}>
         <Text style={{ color: '#fff', fontSize: 28, textAlign: 'left' }}>{numbersToWords[i]} Mission</Text>
+        {
+          !!missionLeaders[i] && (
+            <Text style={{ color: '#8bf', fontSize: 24, textAlign: 'left', marginLeft: 5 }}>Selected by {missionLeaders[i]}</Text>
+          )
+        }
         <View style={styles.inline}>
           { boxes }
         </View>
-        { missionParties[i] && missionParties[i].map(name => 
-          <Text style={{ color: '#8bf', fontSize: 26, marginLeft: 10, }} key={name}>
+        { !!missionParties[i] && missionParties[i].map(name => 
+          <Text style={{ color: '#8bf', fontSize: 24, marginLeft: 10, }} key={name}>
             {name}
           </Text>
         )}

@@ -16,7 +16,7 @@ import MissionBreakdownScreen from './screens/MissionBreakdownScreen';
 export default class App extends React.Component {
 
   state = {
-    players: [],
+    players: ['a', 'b', 'c', 'd', 'e'],
     availableRoles: [ 'Merlin', 'Morgana', 'Assassin', 'Percy' ],
     roles: {},
     STATE_VIEW: 'CHANGE_SETTINGS',
@@ -28,6 +28,7 @@ export default class App extends React.Component {
     consecutiveFailures: 0,
     missionResults: [],
     missionParties: {},
+    missionLeaders: [],
   }
 
   goodRoles = ['Merlin', 'Percy', 'Lover', 'Good Guy'];
@@ -165,7 +166,9 @@ export default class App extends React.Component {
     let failedMissions = this.state.failedMissions
     const missionResults = this.state.missionResults.slice();
     const missionParties = Object.assign({}, this.state.missionParties);
+    const missionLeaders = this.state.missionLeaders.slice();
     missionResults.push(numPassed);
+    missionLeaders.push(this.state.players[this.state.missionLeader]);
     missionParties[this.state.missionNumber] = party;
     if (passed) {
       passedMissions += 1;
@@ -183,6 +186,7 @@ export default class App extends React.Component {
         missionNumber,
         missionResults,
         missionParties,
+        missionLeaders,
       })
     } else {
       if (failedMissions >= 3) {
@@ -281,7 +285,7 @@ export default class App extends React.Component {
       case 'CHOOSE_MISSION':
         return <MissionChooserScreen showLiveMissionBreakdown={this.showLiveMissionBreakdown} missionLeader={this.state.missionLeader} missionSize={Math.round(this.state.missionSize)} missionNumber={this.state.missionNumber} players={this.state.players} getMissionApproval={this.getMissionApproval} />
       case 'MISSION_BREAKDOWN':
-        return <MissionBreakdownScreen finishGame={this.finishGame} goBackToMissionChooser={this.goBackToMissionChooser} missionResults={this.state.missionResults} missionParties={this.state.missionParties} missionChart={this.missionSizeChart[this.state.players.length]} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} />
+        return <MissionBreakdownScreen finishGame={this.finishGame} goBackToMissionChooser={this.goBackToMissionChooser} missionResults={this.state.missionResults} missionLeaders={this.state.missionLeaders} missionParties={this.state.missionParties} missionChart={this.missionSizeChart[this.state.players.length]} getGoodGuys={this.getGoodGuys} getBadGuys={this.getBadGuys} />
       case 'APPROVAL':
         return <MissionApprovalScreen party={this.state.party} denyMission={this.denyMission} approveMission={this.approveMission}/>
       case 'GO_ON_MISSION':
