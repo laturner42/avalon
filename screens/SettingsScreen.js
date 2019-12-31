@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, ScrollView, TouchableOpacity, Platform } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import { WebBrowser } from 'expo';
+import * as WebBrowser from 'expo-web-browser';
 
 export default class SettingsScreen extends React.Component {
 
